@@ -1,0 +1,15 @@
+# Private signing material must never be committed.
+*.gpg
+*.asc.bak
+secring.*
+*.key
+*.private
+passphrase*
+gnupg/
+private/
+*.tmp
+*.temp
+*~
+.DS_Store
+__pycache__/
+*.pyc

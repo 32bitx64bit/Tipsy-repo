@@ -1,0 +1,7 @@
+[tipsy]
+name=Official Tipsy Linux packages (stable)
+baseurl=https://32bitx64bit.github.io/Tipsy-repo/rpm/$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://32bitx64bit.github.io/Tipsy-repo/keys/tipsy-signing-key.asc
+repo_gpgcheck=1

@@ -1,0 +1,10 @@
+[Flatpak Repo]
+Title=Tipsy
+Url=https://32bitx64bit.github.io/Tipsy-repo/flatpak/repo/
+Homepage=https://github.com/32bitx64bit/Tipsy
+Comment=Official Tipsy Linux packages
+Description=Official Tipsy Flatpak repository.
+Icon=https://raw.githubusercontent.com/32bitx64bit/Tipsy/main/tipsy.png
+# GPGKey=<base64 of tipsy-signing-key.asc> is added at signing setup
+# (see docs/SIGNING.md). The key is embedded here once the first signed
+# Flatpak build is published; until then this remote definition is unsigned.
