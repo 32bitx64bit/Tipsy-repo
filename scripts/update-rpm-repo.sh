@@ -126,7 +126,8 @@ if [[ -n "$key_id" ]]; then
     gpg --batch --yes --pinentry-mode loopback --local-user "$key_id" \
       --armor --detach-sign -o "$repodir/repodata/repomd.xml.asc" "$repodir/repodata/repomd.xml"
   fi
-  gpg --verify "$repodir/repomd.xml.asc" "$repodir/repomd.xml" || fail 'repomd.xml.asc verification failed'
+  gpg --verify "$repodir/repodata/repomd.xml.asc" "$repodir/repodata/repomd.xml" \
+    || fail 'repomd.xml.asc verification failed'
   printf 'update-rpm-repo: signed repodata with %s\n' "$key_id"
 fi
 
