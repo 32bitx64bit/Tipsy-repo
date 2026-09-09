@@ -8,19 +8,25 @@
     },
     "linux-x86_64-deb": {
       "name": "tipsy_1.2.0_amd64.deb",
-      "sha256": "5fb3dfea495eb55f5b5c312d7c50a378fffb2fbf211b38874e0ba2def58dbb71",
-      "size": 13828104,
+      "sha256": "00573d19a9c9a513f48a9a75da227a4e864b182346e980c4b6b97a93948df544",
+      "size": 13828100,
       "url": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.2.0/tipsy_1.2.0_amd64.deb"
+    },
+    "linux-x86_64-flatpak": {
+      "name": "Tipsy-1.2.0.flatpak",
+      "sha256": "29c6d64457e8089a1b90b3382ae11e7f9ce08bf8b71a6f53f9ba3c62c44a4613",
+      "size": 10042192,
+      "url": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.2.0/Tipsy-1.2.0.flatpak"
     },
     "linux-x86_64-rpm": {
       "name": "tipsy-1.2.0-1.x86_64.rpm",
-      "sha256": "3bca5fb60b430f55ea6f02e6011bb4cf02c32da1b562592cd34c57363b4a6480",
-      "size": 13837659,
+      "sha256": "8c31cc8274c5547bf486d62cfebe886c54c35333472d41941cea7af663962b13",
+      "size": 13837650,
       "url": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.2.0/tipsy-1.2.0-1.x86_64.rpm"
     }
   },
   "channel": "stable",
-  "publishedAt": "2026-09-09T17:47:52Z",
+  "publishedAt": "2026-09-09T18:34:12Z",
   "releaseNotesUrl": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.2.0",
   "releaseUrl": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.2.0",
   "version": "1.2.0"
