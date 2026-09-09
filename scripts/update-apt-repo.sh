@@ -46,6 +46,9 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ -n "$repo_root" ]] || fail '--repo-root is required'
+[[ -d "$repo_root" ]] || fail "repo root not found: $repo_root"
+# Absolute: the index and Release steps below cd into the archive.
+repo_root=$(CDPATH= cd -- "$repo_root" && pwd)
 [[ "$keep" =~ ^[0-9]+$ && "$keep" -ge 1 ]] || fail '--keep must be a positive integer'
 command -v dpkg-scanpackages >/dev/null 2>&1 || fail 'dpkg-scanpackages is missing (install dpkg-dev)'
 command -v apt-ftparchive >/dev/null 2>&1 || fail 'apt-ftparchive is missing (install apt)'
@@ -100,10 +103,13 @@ while IFS= read -r filename; do
 done < <(awk '/^Filename: / {print $2}' "$bindir/Packages")
 
 # 4. Build Release with apt-ftparchive (deterministic field order). The config
-# lives outside dists/, and the previous Release/InRelease/Release.gpg are
-# removed first so a stale Release can never be hashed into the new one.
-release_conf=$(mktemp "${TMPDIR:-/tmp}/tipsy-apt-release.XXXXXXXX")
-trap 'rm -f "$release_conf"' EXIT
+# and the output are staged outside dists/, and the previous
+# Release/InRelease/Release.gpg are removed first: apt-ftparchive hashes every
+# "Release" it finds while scanning, so writing straight into dists/ would
+# list a stale or empty Release inside the new one.
+release_work=$(mktemp -d "${TMPDIR:-/tmp}/tipsy-apt-release.XXXXXXXX")
+trap 'rm -rf "$release_work"' EXIT
+release_conf="$release_work/release.conf"
 cat > "$release_conf" <<EOF
 APT::FTPArchive::Release::Origin "$origin";
 APT::FTPArchive::Release::Label "$origin";
@@ -116,8 +122,10 @@ EOF
 rm -f "$dists/Release" "$dists/InRelease" "$dists/Release.gpg"
 (
   cd "$apt_root"
-  apt-ftparchive -c "$release_conf" release "dists/$codename" > "dists/$codename/Release"
+  apt-ftparchive -c "$release_conf" release "dists/$codename" > "$release_work/Release"
 )
+[[ -s "$release_work/Release" ]] || fail 'apt-ftparchive produced an empty Release'
+mv -- "$release_work/Release" "$dists/Release"
 
 # 5. Sign (InRelease = clearsigned, Release.gpg = detached).
 # Passphrase comes from TIPSY_GPG_PASSPHRASE via fd 3 when set: never argv.

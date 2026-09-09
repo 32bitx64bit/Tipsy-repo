@@ -44,6 +44,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ -n "$repo_root" ]] || fail '--repo-root is required'
+[[ -d "$repo_root" ]] || fail "repo root not found: $repo_root"
+repo_root=$(CDPATH= cd -- "$repo_root" && pwd)
 [[ "$keep" =~ ^[0-9]+$ && "$keep" -ge 1 ]] || fail '--keep must be a positive integer'
 command -v flatpak >/dev/null 2>&1 || fail 'flatpak is missing (install flatpak)'
 command -v ostree >/dev/null 2>&1 || fail 'ostree is missing (install ostree)'

@@ -38,6 +38,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ -n "$repo_root" ]] || fail '--repo-root is required'
+[[ -d "$repo_root" ]] || fail "repo root not found: $repo_root"
+repo_root=$(CDPATH= cd -- "$repo_root" && pwd)
 [[ "$keep" =~ ^[0-9]+$ && "$keep" -ge 1 ]] || fail '--keep must be a positive integer'
 command -v createrepo_c >/dev/null 2>&1 || fail 'createrepo_c is missing (install createrepo_c)'
 command -v rpm >/dev/null 2>&1 || fail 'rpm is missing'
