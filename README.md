@@ -33,9 +33,9 @@ is pruned.
 Tipsy does **not** include Roblox. After installing Tipsy itself, use the
 in-app setup assistant to install an official Android x86-64 Roblox client.
 
-> Until the first signed release is published, the `keys/` URL below 404s —
-> install the AppImage instead. Afterwards, updates arrive through your normal
-> system package manager. Full details: [`docs/INSTALL.md`](docs/INSTALL.md).
+> Until the first release is published here, the APT/DNF/Flatpak repositories
+> are empty — install the AppImage instead. Afterwards, updates arrive through
+> your normal system package manager. Full details: [`docs/INSTALL.md`](docs/INSTALL.md).
 
 ### Debian / Ubuntu (APT)
 

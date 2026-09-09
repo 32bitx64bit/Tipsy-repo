@@ -81,6 +81,13 @@ ok 'rpm repository'
 # --- Flatpak ---
 [[ -d "$flatpak_repo/objects" ]] || fail 'flatpak repo objects/ missing (not an OSTree repo)'
 [[ -f "$flatpak_repo/summary" ]] || fail 'flatpak repo summary missing'
+if [[ -s "$flatpak_repo/summary.sig" ]]; then
+  ok 'flatpak summary.sig present'
+elif [[ "$strict" == 1 ]]; then
+  fail 'flatpak summary.sig missing in --strict mode'
+else
+  warn 'flatpak summary.sig missing (unsigned; publish requires signing)'
+fi
 [[ -f "$repo_root/public/flatpak/tipsy.flatpakrepo" ]] || fail 'tipsy.flatpakrepo missing'
 grep -q '^Url=' "$repo_root/public/flatpak/tipsy.flatpakrepo" || fail 'tipsy.flatpakrepo has no Url='
 if command -v ostree >/dev/null 2>&1; then

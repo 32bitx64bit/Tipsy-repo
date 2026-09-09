@@ -29,9 +29,9 @@ sudo apt update
 sudo apt upgrade
 ```
 
-> Note: the signing key appears under `keys/` after the first signed release
-> (see `SIGNING.md`). Until then, the `curl` step will 404; install the
-> AppImage below instead.
+> Note: until the first release is published here, the repository index is
+> empty and `apt install tipsy` finds nothing; install the AppImage below
+> instead.
 
 ## Fedora / compatible RPM systems (DNF)
 

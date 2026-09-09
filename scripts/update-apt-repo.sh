@@ -55,6 +55,8 @@ pool="$apt_root/pool"
 dists="$apt_root/dists/$codename"
 bindir="$dists/main/binary-$arch"
 mkdir -p "$pool" "$bindir"
+# Placeholders that kept the empty layout in git; real content replaces them.
+rm -f "$pool/.gitkeep" "$bindir/.gitkeep"
 
 # 1. Ingest new .debs (same name + same hash = skip, same name + new hash = replace).
 for deb in "${deb_files[@]}"; do
@@ -97,8 +99,12 @@ while IFS= read -r filename; do
   [[ -f "$apt_root/$filename" ]] || fail "indexed file missing: $filename"
 done < <(awk '/^Filename: / {print $2}' "$bindir/Packages")
 
-# 4. Build Release with apt-ftparchive (deterministic field order).
-cat > "$dists/.apt-release.conf" <<EOF
+# 4. Build Release with apt-ftparchive (deterministic field order). The config
+# lives outside dists/, and the previous Release/InRelease/Release.gpg are
+# removed first so a stale Release can never be hashed into the new one.
+release_conf=$(mktemp "${TMPDIR:-/tmp}/tipsy-apt-release.XXXXXXXX")
+trap 'rm -f "$release_conf"' EXIT
+cat > "$release_conf" <<EOF
 APT::FTPArchive::Release::Origin "$origin";
 APT::FTPArchive::Release::Label "$origin";
 APT::FTPArchive::Release::Suite "$codename";
@@ -107,11 +113,11 @@ APT::FTPArchive::Release::Architectures "$arch";
 APT::FTPArchive::Release::Components "main";
 APT::FTPArchive::Release::Description "Official $origin Linux packages";
 EOF
+rm -f "$dists/Release" "$dists/InRelease" "$dists/Release.gpg"
 (
   cd "$apt_root"
-  apt-ftparchive -c "dists/$codename/.apt-release.conf" release "dists/$codename" > "dists/$codename/Release"
+  apt-ftparchive -c "$release_conf" release "dists/$codename" > "dists/$codename/Release"
 )
-rm -f "$dists/.apt-release.conf"
 
 # 5. Sign (InRelease = clearsigned, Release.gpg = detached).
 # Passphrase comes from TIPSY_GPG_PASSPHRASE via fd 3 when set: never argv.

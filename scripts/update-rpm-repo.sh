@@ -69,9 +69,11 @@ if [[ -n "$key_id" ]]; then
   if [[ -n "${TIPSY_GPG_PASSPHRASE:-}" ]]; then
     sign_macros=$(mktemp "${TMPDIR:-/tmp}/tipsy-rpmsign.XXXXXXXX")
     cat > "$sign_macros" <<'EOF'
-%__gpg_sign_cmd %{__gpg} gpg --force-v3-sigs --batch --no-verbose --no-armor --pinentry-mode loopback --passphrase-fd 3 --no-secmem-warning -u "%{_gpg_name}" -sbo %{__signature_filename} %{__plaintext_filename}
+%__gpg_sign_cmd %{__gpg} gpg --batch --no-verbose --no-armor --pinentry-mode loopback --passphrase-fd 3 --no-secmem-warning -u "%{_gpg_name}" -sbo %{__signature_filename} %{__plaintext_filename}
 EOF
-    rpm_macros=(--define "_topdir $HOME/rpmbuild" --macros "$sign_macros")
+    # --load adds this file on top of the system macros. (--macros would
+    # replace them, losing %__gpg and everything else rpmsign needs.)
+    rpm_macros=(--load "$sign_macros")
   fi
   for rpm_file in "$repodir"/*.rpm; do
     [[ -e "$rpm_file" ]] || break

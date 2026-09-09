@@ -49,11 +49,8 @@ prune_by_version() {
 
 prune_by_version "$repo_root/public/apt/pool" '*.deb'
 prune_by_version "$repo_root/public/rpm/x86_64" '*.rpm'
-# Flatpak objects are content-addressed and shared between versions; prune via
-# ostree so still-referenced objects survive.
-if [[ -d "$repo_root/public/flatpak/repo/objects" ]] && command -v flatpak >/dev/null 2>&1; then
-  flatpak build-update-repo --prune "$repo_root/public/flatpak/repo" || \
-    printf 'prune-old-packages: WARNING: flatpak prune failed\n' >&2
-fi
+# The Flatpak/OSTree repo is pruned by update-flatpak-repo.sh (--keep): every
+# summary rewrite must be signed, and an unsigned `build-update-repo --prune`
+# here would delete summary.sig.
 
 printf 'prune-old-packages: done (keep=%s)\n' "$keep"
