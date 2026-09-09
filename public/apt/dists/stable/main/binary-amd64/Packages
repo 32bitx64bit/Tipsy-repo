@@ -1,0 +1,19 @@
+Package: tipsy
+Version: 1.2.0
+Architecture: amd64
+Maintainer: Tipsy Contributors <32bitx64bit@users.noreply.github.com>
+Installed-Size: 46516
+Depends: libqt6core6 | libqt6core6t64, libqt6gui6 | libqt6gui6t64, libqt6widgets6 | libqt6widgets6t64, libx11-6, libx11-xcb1, libxcb1, libxext6, libxrandr2, libxtst6, libxi6, libegl1, libgles2, libpango-1.0-0, libpangocairo-1.0-0, libpangoft2-1.0-0, libcairo2, libpulse0
+Filename: pool/tipsy_1.2.0_amd64.deb
+Size: 13828104
+MD5sum: fdd77a75027c2bcc9f1a23ce7690ff9b
+SHA1: 83ad918264f2f59ac5f549503d1dfc4a436215be
+SHA256: 5fb3dfea495eb55f5b5c312d7c50a378fffb2fbf211b38874e0ba2def58dbb71
+Section: games
+Priority: optional
+Homepage: https://github.com/32bitx64bit/Tipsy
+Description: Run the official Roblox Android client on Linux
+ Tipsy is an open-source Linux compatibility runtime for the official
+ unmodified Roblox Android x86-64 client. Roblox itself is not included
+ and must be installed through the in-app setup assistant.
+

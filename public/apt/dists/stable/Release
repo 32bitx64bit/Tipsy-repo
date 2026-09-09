@@ -1,0 +1,20 @@
+Architectures: amd64
+Codename: stable
+Components: main
+Date: Wed, 09 Sep 2026 17:47:49 +0000
+Description: Official Tipsy Linux packages
+Label: Tipsy
+Origin: Tipsy
+Suite: stable
+MD5Sum:
+ 33a78b29264ffdf80a467d92fe04b5b4              970 main/binary-amd64/Packages
+ acfdfe7852f18f1f4c49c19dbb12b9ed              585 main/binary-amd64/Packages.gz
+SHA1:
+ cdfd4f41b4e6a923f423d7155c77f49954771180              970 main/binary-amd64/Packages
+ 8c70989bbe9783910a3708086ed89df5a57ff6a3              585 main/binary-amd64/Packages.gz
+SHA256:
+ 3e7c161a5e30f70ff127e7934efa92969e2823a455f71f64bbe492df3664e58c              970 main/binary-amd64/Packages
+ cee6c79ba2b5f5702837be8644279a2353424e0a9022224c6655635224cead7e              585 main/binary-amd64/Packages.gz
+SHA512:
+ c663982a2554ba628329faebc9cc81865764cf33e40c6458e21a8daa05c2193ec9fd02edfc9ed53ef2d74fa53ef09baf2afc51ef9dc3705fa1ca4cc50662932c              970 main/binary-amd64/Packages
+ 845825963bedb4db6a90a8be7c8bb3a2b40b038834993007106191e2fb961e8a3b5aa41e503766fcfb7175bd02005daf9d7292bad2b81f423d3fe7329c2a6ea3              585 main/binary-amd64/Packages.gz
