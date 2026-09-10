@@ -59,6 +59,15 @@ if [[ ! -d "$repodir/objects" ]]; then
   ostree init --repo="$repodir" --mode=archive
 fi
 
+# The repo lives in git, and git does not track empty directories. A fresh
+# checkout therefore lacks the empty ones `ostree init` created (refs/remotes,
+# refs/mirrors, tmp, state, extensions), and `flatpak build-update-repo` fails
+# on the first missing one ("Listing refs: opendir(refs/remotes): No such file
+# or directory"). Restore the standard layout before any ostree operation;
+# harmless when the directories already exist.
+mkdir -p "$repodir"/objects "$repodir"/refs/heads "$repodir"/refs/mirrors \
+  "$repodir"/refs/remotes "$repodir"/tmp/cache "$repodir"/state "$repodir"/extensions
+
 # ostree signs through gpg-agent (gpgme); unlike gpg itself it has no
 # --passphrase-fd path. When a passphrase is configured, seed the agent's
 # cache for this session so signing works without a pinentry (CI has none).
