@@ -47,8 +47,35 @@ prune_by_version() {
   shopt -u nullglob
 }
 
+# Pacman package names are tipsy-<ver>-<rel>-<arch>.pkg.tar.zst (pkgver never
+# contains a hyphen), so group explicitly and take the detached signature with
+# each removed package.
+prune_pacman() {
+  local dir="$repo_root/public/pacman/x86_64"
+  [[ -d "$dir" ]] || return 0
+  shopt -s nullglob
+  declare -A groups=()
+  local f base key
+  for f in "$dir"/*.pkg.tar.zst; do
+    base=$(basename "$f")
+    key=$(sed -E 's/-[0-9][^-]*-[0-9]+-.*\.pkg\.tar\.zst$//' <<<"$base")
+    groups[$key]+="$f"$'\n'
+  done
+  for key in "${!groups[@]}"; do
+    mapfile -t files < <(printf '%s' "${groups[$key]}" | sort -V)
+    local drop=$(( ${#files[@]} - keep ))
+    local i
+    for (( i = 0; i < drop; i++ )); do
+      printf 'prune-old-packages: pruning %s\n' "${files[$i]}"
+      rm -f "${files[$i]}" "${files[$i]}.sig"
+    done
+  done
+  shopt -u nullglob
+}
+
 prune_by_version "$repo_root/public/apt/pool" '*.deb'
 prune_by_version "$repo_root/public/rpm/x86_64" '*.rpm'
+prune_pacman
 # The Flatpak/OSTree repo is pruned by update-flatpak-repo.sh (--keep): every
 # summary rewrite must be signed, and an unsigned `build-update-repo --prune`
 # here would delete summary.sig.

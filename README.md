@@ -8,8 +8,10 @@ let Linux package managers update Tipsy natively:
 
 | Path | What it is |
 | --- | --- |
+| `public/install.sh` | One-command installer (detects the distribution) |
 | `public/apt/` | APT repository (Debian / Ubuntu), suite `stable` |
 | `public/rpm/` | DNF/RPM repository (`x86_64`) |
+| `public/pacman/` | pacman repository (Arch / CachyOS / EndeavourOS) and `tipsy.conf` |
 | `public/flatpak/repo/` | Flatpak/OSTree repository |
 | `public/flatpak/tipsy.flatpakrepo` | Flatpak remote definition |
 | `public/rpm/tipsy.repo` | DNF `.repo` definition |
@@ -30,12 +32,21 @@ is pruned.
 
 ## Install
 
+One command detects your distribution, adds the signed repository, and
+installs Tipsy:
+
+```bash
+curl -fsSL https://32bitx64bit.github.io/Tipsy-repo/install.sh | sudo bash
+```
+
+Supported automatically: **Debian/Ubuntu** (APT), **Fedora/RHEL** (DNF),
+**Arch/CachyOS/EndeavourOS** (pacman), and **Flatpak** (when installed) on any
+other distribution. Every method below also has a manual equivalent if you
+would rather review each step first; full details:
+[`docs/INSTALL.md`](docs/INSTALL.md).
+
 Tipsy does **not** include Roblox. After installing Tipsy itself, use the
 in-app setup assistant to install an official Android x86-64 Roblox client.
-
-> Until the first release is published here, the APT/DNF/Flatpak repositories
-> are empty — install the AppImage instead. Afterwards, updates arrive through
-> your normal system package manager. Full details: [`docs/INSTALL.md`](docs/INSTALL.md).
 
 ### Debian / Ubuntu (APT)
 
@@ -63,6 +74,24 @@ sudo dnf install -y tipsy
 
 Updates: `sudo dnf upgrade`.
 
+### Arch / CachyOS / EndeavourOS (pacman)
+
+```bash
+sudo curl -fsSL -o /etc/pacman.d/tipsy.conf \
+  https://32bitx64bit.github.io/Tipsy-repo/pacman/tipsy.conf
+keyfile=$(mktemp)
+curl -fsSL -o "$keyfile" https://32bitx64bit.github.io/Tipsy-repo/keys/tipsy-signing-key.asc
+sudo pacman-key --add "$keyfile"
+sudo pacman-key --lsign-key "$(gpg --with-colons --show-keys "$keyfile" | awk -F: '/^fpr:/{print $10; exit}')"
+rm -f "$keyfile"
+grep -q 'Include = /etc/pacman.d/tipsy.conf' /etc/pacman.conf || \
+  echo 'Include = /etc/pacman.d/tipsy.conf' | sudo tee -a /etc/pacman.conf
+sudo pacman -Sy && sudo pacman -S tipsy
+```
+
+The signing key must be locally trusted (`pacman-key --lsign-key`); without it
+pacman rejects the signed packages as unknown trust. Updates: `sudo pacman -Syu`.
+
 ### Flatpak
 
 ```bash
@@ -89,9 +118,9 @@ AppImage is the one format Tipsy updates itself, via its in-app updater and
 
 1. A `v*` tag on `32bitx64bit/Tipsy` builds and signs the AppImage
    (existing `release.yml`, Sigstore keyless).
-2. `publish-repo.yml` in the Tipsy repository builds `.deb`/`.rpm`,
-   creates the matching Tipsy-repo Release, regenerates all repository
-   metadata plus `latest.json`, verifies everything, and pushes here.
+2. `publish-repo.yml` in the Tipsy repository builds `.deb`/`.rpm`/pacman
+   packages, creates the matching Tipsy-repo Release, regenerates all
+   repository metadata plus `latest.json`, verifies everything, and pushes here.
 3. This workflow (`pages.yml`) republishes `public/` to GitHub Pages.
 
 Details: [`docs/RELEASE-PROCESS.md`](docs/RELEASE-PROCESS.md).
@@ -101,7 +130,8 @@ Signing and secrets: [`docs/SIGNING.md`](docs/SIGNING.md).
 
 - APT owns `.deb` updates (`apt upgrade`).
 - DNF owns `.rpm` updates (`dnf upgrade`).
+- pacman owns `.pkg.tar.zst` updates (`pacman -Syu`).
 - Flatpak owns Flatpak updates (`flatpak update`).
 - Tipsy owns **AppImage** updates only (in-app updater via `latest.json`).
 
-Tipsy never installs `.deb`, `.rpm`, or Flatpak updates itself.
+Tipsy never installs `.deb`, `.rpm`, pacman, or Flatpak updates itself.

@@ -1,10 +1,11 @@
 # Signing
 
 One GPG release-signing key signs everything the system package managers
-trust: the APT `Release` file, RPM packages plus `repomd.xml`, the Flatpak
-summary, and the `latest.json` detached signature. AppImage artifacts keep
-their existing keyless Sigstore signatures from the Tipsy `release.yml`
-workflow; this key does not replace that.
+trust: the APT `Release` file, RPM packages plus `repomd.xml`, pacman packages
+plus the `tipsy.db` database, the Flatpak summary, and the `latest.json`
+detached signature. AppImage artifacts keep their existing keyless Sigstore
+signatures from the Tipsy `release.yml` workflow; this key does not replace
+that.
 
 ## Secrets to configure
 
@@ -16,7 +17,7 @@ Actions). Nothing secret is ever committed here or exposed through Pages.
 | --- | --- |
 | `TIPSY_REPO_TOKEN` | Fine-grained PAT scoped to **only** `32bitx64bit/Tipsy-repo` with `Contents: read and write`. Lets the Tipsy `publish-repo.yml` workflow create Releases, upload assets, and push repository metadata. Migrate to a GitHub App later without changing the workflow (only the token source changes). |
 | `TIPSY_GPG_PRIVATE_KEY` | ASCII-armored private key (`gpg --armor --export-secret-keys KEYID`). Imported with `gpg --import` during publish; never logged. |
-| `TIPSY_GPG_KEY_ID` | Key ID / fingerprint of the release-signing key (also the APT/RPM/Flatpak signer). |
+| `TIPSY_GPG_KEY_ID` | Key ID / fingerprint of the release-signing key (also the APT/RPM/pacman/Flatpak signer). |
 | `TIPSY_GPG_PASSPHRASE` | Passphrase for the private key (empty if the key has none, but a passphrase is recommended). Passed via file descriptor / `--pinentry-mode loopback` with stdin, never as a CLI argument. |
 
 The publish workflow fails closed with an actionable error when any of these
@@ -61,6 +62,10 @@ Tipsy repository secrets.
   `apt update` (see `INSTALL.md`).
 - DNF verifies RPM and repodata signatures via the `gpgkey=` line in
   `public/rpm/tipsy.repo`.
+- pacman verifies package and database signatures against the key imported
+  into the pacman keyring and locally trusted with `pacman-key --lsign-key`
+  (see `INSTALL.md`; `public/pacman/tipsy.conf` sets
+  `SigLevel = Required DatabaseOptional`).
 - Flatpak verifies the summary against the key embedded in
   `public/flatpak/tipsy.flatpakrepo`.
 - The AppImage updater verifies `latest.json.sig` against the public key

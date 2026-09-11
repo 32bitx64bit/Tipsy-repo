@@ -34,6 +34,7 @@ done
 
 apt="$repo_root/public/apt"
 rpm_repo="$repo_root/public/rpm/x86_64"
+pacman_repo="$repo_root/public/pacman/x86_64"
 flatpak_repo="$repo_root/public/flatpak/repo"
 manifest="$repo_root/public/latest.json"
 pub="$repo_root/public"
@@ -77,6 +78,41 @@ else
   warn 'rpm repomd.xml.asc missing (unsigned; publish requires signing)'
 fi
 ok 'rpm repository'
+
+# --- Pacman ---
+[[ -f "$repo_root/public/pacman/tipsy.conf" ]] || fail 'pacman/tipsy.conf missing'
+grep -q '^Server = ' "$repo_root/public/pacman/tipsy.conf" || fail 'pacman/tipsy.conf has no Server = line'
+grep -q '^SigLevel = ' "$repo_root/public/pacman/tipsy.conf" || fail 'pacman/tipsy.conf has no SigLevel = line'
+[[ -f "$pacman_repo/tipsy.db" ]] || fail 'pacman tipsy.db missing'
+[[ ! -L "$pacman_repo/tipsy.db" ]] || fail 'pacman tipsy.db is a symlink (GitHub Pages would not serve it)'
+[[ -s "$pacman_repo/tipsy.db" ]] || fail 'pacman tipsy.db is empty'
+shopt -s nullglob
+pacman_pkgs=("$pacman_repo"/tipsy-*.pkg.tar.zst)
+shopt -u nullglob
+[[ ${#pacman_pkgs[@]} -ge 1 ]] || fail 'no tipsy pacman package in repository'
+if command -v bsdtar >/dev/null 2>&1; then
+  pacman_db_listing=$(bsdtar -tf "$pacman_repo/tipsy.db" 2>/dev/null) || fail 'pacman tipsy.db is not a readable archive'
+  grep -q '/desc$' <<<"$pacman_db_listing" || fail 'pacman tipsy.db has no package desc entries'
+else
+  warn 'bsdtar unavailable; skipping pacman database listing check'
+fi
+pacman_signed=1
+for p in "${pacman_pkgs[@]}"; do
+  if [[ ! -s "$p.sig" ]]; then
+    pacman_signed=0
+    warn "pacman package is unsigned: $(basename "$p")"
+  fi
+done
+if [[ -s "$pacman_repo/tipsy.db.sig" ]]; then
+  ok 'pacman tipsy.db.sig present'
+else
+  pacman_signed=0
+  warn 'pacman tipsy.db.sig missing (unsigned; publish requires signing)'
+fi
+if [[ "$strict" == 1 && "$pacman_signed" != 1 ]]; then
+  fail 'pacman repository is not fully signed in --strict mode'
+fi
+ok 'pacman repository'
 
 # --- Flatpak ---
 [[ -d "$flatpak_repo/objects" ]] || fail 'flatpak repo objects/ missing (not an OSTree repo)'
@@ -133,6 +169,13 @@ elif [[ "$strict" == 1 ]]; then
 else
   warn 'latest.json.sig missing (unsigned; publish requires signing)'
 fi
+
+# --- Installer ---
+[[ -f "$pub/install.sh" ]] || fail 'install.sh missing'
+if command -v bash >/dev/null 2>&1; then
+  bash -n "$pub/install.sh" || fail 'install.sh has a syntax error'
+fi
+ok 'install.sh'
 
 # --- Hygiene: no private material or tokens in git ---
 if git -C "$repo_root" rev-parse --is-inside-work-tree >/dev/null 2>&1; then

@@ -1,13 +1,27 @@
 # Install Tipsy on Linux
 
+Easiest: one command detects the distribution, adds the signed repository, and
+installs Tipsy:
+
+```bash
+curl -fsSL https://32bitx64bit.github.io/Tipsy-repo/install.sh | sudo bash
+```
+
+It handles Debian/Ubuntu (APT), Fedora/RHEL (DNF), Arch/CachyOS/EndeavourOS
+(pacman), and falls back to Flatpak (when installed) elsewhere. `--dry-run`
+prints every command without changing anything, `--method` forces one package
+manager, and `--no-install` adds the repository only.
+
+Prefer to inspect each step? The manual commands are below.
+
+Tipsy still does **not** include Roblox. After installing Tipsy itself, use the
+in-app setup assistant to install an official Android x86-64 Roblox client.
+
 Official packages are hosted in this repository via GitHub Pages:
 
 ```text
 https://32bitx64bit.github.io/Tipsy-repo/
 ```
-
-Tipsy still does **not** include Roblox. After installing Tipsy itself, use the
-in-app setup assistant to install an official Android x86-64 Roblox client.
 
 ## Debian / Ubuntu (APT)
 
@@ -29,10 +43,6 @@ sudo apt update
 sudo apt upgrade
 ```
 
-> Note: until the first release is published here, the repository index is
-> empty and `apt install tipsy` finds nothing; install the AppImage below
-> instead.
-
 ## Fedora / compatible RPM systems (DNF)
 
 ```bash
@@ -46,6 +56,29 @@ Updates arrive through DNF:
 
 ```bash
 sudo dnf upgrade
+```
+
+## Arch / CachyOS / EndeavourOS (pacman)
+
+```bash
+sudo curl -fsSL -o /etc/pacman.d/tipsy.conf \
+  https://32bitx64bit.github.io/Tipsy-repo/pacman/tipsy.conf
+keyfile=$(mktemp)
+curl -fsSL -o "$keyfile" https://32bitx64bit.github.io/Tipsy-repo/keys/tipsy-signing-key.asc
+sudo pacman-key --add "$keyfile"
+sudo pacman-key --lsign-key "$(gpg --with-colons --show-keys "$keyfile" | awk -F: '/^fpr:/{print $10; exit}')"
+rm -f "$keyfile"
+grep -q 'Include = /etc/pacman.d/tipsy.conf' /etc/pacman.conf || \
+  echo 'Include = /etc/pacman.d/tipsy.conf' | sudo tee -a /etc/pacman.conf
+sudo pacman -Sy && sudo pacman -S tipsy
+```
+
+`pacman-key --lsign-key` marks the Tipsy signing key as locally trusted;
+without it pacman refuses the signed packages as unknown trust. Updates arrive
+through pacman:
+
+```bash
+sudo pacman -Syu
 ```
 
 ## Flatpak

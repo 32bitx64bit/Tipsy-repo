@@ -34,17 +34,18 @@ That is the whole manual process. Automation takes over:
 2. `publish-repo.yml` (Tipsy, trigger: release `published`) then:
    - rejects prereleases for the stable channel (stable repos only advance on
      full releases);
-   - builds `tipsy_1.2.3_amd64.deb` and `tipsy-1.2.3-1.x86_64.rpm`;
+   - builds `tipsy_1.2.3_amd64.deb`, `tipsy-1.2.3-1.x86_64.rpm`, and
+     `tipsy-1.2.3-1-x86_64.pkg.tar.zst`;
    - downloads the AppImage from the Tipsy release;
    - creates/updates the matching `v1.2.3` Tipsy-repo Release and uploads all
      artifacts plus `SHA256SUMS` (`gh release upload --clobber` so reruns
      replace same-named assets intentionally);
    - checks out Tipsy-repo with `TIPSY_REPO_TOKEN`, runs
-     `update-apt-repo.sh`, `update-rpm-repo.sh`, `update-flatpak-repo.sh`
-     (bundle import when a Flatpak bundle exists), prunes Pages history to the
-     newest 3 (Releases keep everything), regenerates `latest.json` from the
-     real files, signs metadata, runs `verify-repositories.sh --strict`, and
-     pushes to `main`.
+     `update-apt-repo.sh`, `update-rpm-repo.sh`, `update-pacman-repo.sh`,
+     `update-flatpak-repo.sh` (bundle import when a Flatpak bundle exists),
+     prunes Pages history to the newest 3 (Releases keep everything),
+     regenerates `latest.json` from the real files, signs metadata, runs
+     `verify-repositories.sh --strict`, and pushes to `main`.
 3. `pages.yml` (here) deploys `public/` to Pages.
 
 Any failure in building, signing, validation, or manifest generation fails
@@ -53,15 +54,15 @@ the publish run before pushing, so a broken repository is never published and
 
 ## Idempotent reruns
 
-Re-running `publish-repo.yml` for the same version is safe: pool/RPM copies
-skip identical files, metadata is regenerated from scratch (not appended),
-`latest.json` is rewritten deterministically, and existing Release assets are
-clobbered only with identical rebuilt content. APT/RPM/Flatpak metadata is
-never duplicated or corrupted by a rerun.
+Re-running `publish-repo.yml` for the same version is safe: pool/RPM/pacman
+copies skip identical files, metadata is regenerated from scratch (not
+appended), `latest.json` is rewritten deterministically, and existing Release
+assets are clobbered only with identical rebuilt content. APT/RPM/pacman/
+Flatpak metadata is never duplicated or corrupted by a rerun.
 
 ## Prereleases
 
-GitHub prereleases never touch the stable APT/RPM/Flatpak repos or
+GitHub prereleases never touch the stable APT/RPM/pacman/Flatpak repos or
 `latest.json`. The manifest schema carries a `channel` field so `beta`/`nightly`
 channels can be added later without breaking the AppImage updater.
 
