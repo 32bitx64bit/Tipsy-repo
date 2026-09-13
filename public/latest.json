@@ -8,31 +8,31 @@
     },
     "linux-x86_64-deb": {
       "name": "tipsy_1.3.0_amd64.deb",
-      "sha256": "84038c0a540627afaab8a28c37672573ecc341f4dc7b942f82b07c9cc5f3ed34",
-      "size": 14166508,
+      "sha256": "d412859b85f657e15c76e0330a24b3373df835497aa1b64c80f3970aa1925fad",
+      "size": 14166522,
       "url": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.3.0/tipsy_1.3.0_amd64.deb"
     },
     "linux-x86_64-flatpak": {
       "name": "Tipsy-1.3.0.flatpak",
-      "sha256": "1804fcd9bd59b729000916901e89b8d2106e8269295436372c979aaa88751bc7",
-      "size": 10347568,
+      "sha256": "b3cbbad8f03410a9f2716ed3c8d776b0498558062b550ebc3063ea6f3e2c658b",
+      "size": 10301776,
       "url": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.3.0/Tipsy-1.3.0.flatpak"
     },
     "linux-x86_64-pacman": {
       "name": "tipsy-1.3.0-1-x86_64.pkg.tar.zst",
-      "sha256": "def7c167d989edc80e26ce9b3d1b2f0c5b9fe9daedb3bad5980048f64f064382",
-      "size": 11328228,
+      "sha256": "7aa12a9cb90fe5c4b2e6bb37dbe63fa40cb175e011b253c737cdc487713010c3",
+      "size": 11327683,
       "url": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.3.0/tipsy-1.3.0-1-x86_64.pkg.tar.zst"
     },
     "linux-x86_64-rpm": {
       "name": "tipsy-1.3.0-1.x86_64.rpm",
-      "sha256": "82595caabf5a8d3f7af7072657190f0e9985aae443a8246be339e71830b78d13",
-      "size": 14176221,
+      "sha256": "764df7f64bc3fab82a4af00fcc984c88cca69dbd4000d81199a89ea831d16332",
+      "size": 14176220,
       "url": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.3.0/tipsy-1.3.0-1.x86_64.rpm"
     }
   },
   "channel": "stable",
-  "publishedAt": "2026-09-13T06:17:55Z",
+  "publishedAt": "2026-09-13T06:37:54Z",
   "releaseNotesUrl": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.3.0",
   "releaseUrl": "https://github.com/32bitx64bit/Tipsy-repo/releases/download/v1.3.0",
   "version": "1.3.0"
