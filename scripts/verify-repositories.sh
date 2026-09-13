@@ -93,6 +93,10 @@ shopt -u nullglob
 if command -v bsdtar >/dev/null 2>&1; then
   pacman_db_listing=$(bsdtar -tf "$pacman_repo/tipsy.db" 2>/dev/null) || fail 'pacman tipsy.db is not a readable archive'
   grep -q '/desc$' <<<"$pacman_db_listing" || fail 'pacman tipsy.db has no package desc entries'
+  if [[ -n "$version" ]]; then
+    grep -qx "tipsy-${version}-1/desc" <<<"$pacman_db_listing" \
+      || fail "pacman tipsy.db has no entry for ${version}-1 (Ubuntu repo-add last-add-wins leftover?)"
+  fi
 else
   warn 'bsdtar unavailable; skipping pacman database listing check'
 fi

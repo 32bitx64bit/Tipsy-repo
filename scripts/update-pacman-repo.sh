@@ -129,14 +129,24 @@ fi
 
 # 3. Rebuild the database from scratch. Repository metadata is small, so a
 # fresh rebuild is the only way to guarantee pruned versions leave no stale
-# entries (repo-add only ever adds).
+# entries. Ubuntu noble's repo-add 6.0.2 keeps one entry per pkgname and
+# the LAST added package wins (the "newer version already present" line is
+# only a warning). kept[] is newest-first for --keep; pass oldest-first
+# here so 1.3.0 is not replaced by 1.2.3.
 rm -f "$repodir/tipsy.db" "$repodir/tipsy.db.tar.gz" \
       "$repodir/tipsy.db.sig" "$repodir/tipsy.db.tar.gz.sig" \
       "$repodir/tipsy.files" "$repodir/tipsy.files.tar.gz" \
       "$repodir/tipsy.files.sig" "$repodir/tipsy.files.tar.gz.sig" \
       "$repodir/tipsy.db.tar.gz.old" "$repodir/tipsy.files.tar.gz.old"
-repo-add "$repodir/tipsy.db.tar.gz" "${kept[@]}"
+mapfile -t index_pkgs < <(printf '%s\n' "${kept[@]}" | sort -V)
+repo-add "$repodir/tipsy.db.tar.gz" "${index_pkgs[@]}"
 [[ -f "$repodir/tipsy.db.tar.gz" ]] || fail 'repo-add did not produce tipsy.db.tar.gz'
+newest_pkg=$(printf '%s\n' "${kept[@]}" | sort -Vr | head -n 1)
+newest_entry=$(basename "$newest_pkg" | sed -E "s/-${arch}\\.pkg\\.tar\\.[a-z0-9]+$//")
+[[ -n "$newest_entry" && "$newest_entry" != "$(basename "$newest_pkg")" ]] \
+  || fail "cannot parse repo-add entry from $(basename "$newest_pkg")"
+bsdtar -tf "$repodir/tipsy.db.tar.gz" | grep -qx "${newest_entry}/desc" \
+  || fail "repo-add left ${newest_entry} out of tipsy.db (last-add-wins on 6.0.2; pass oldest-first)"
 
 # 4. Materialize repo-add's symlinks as regular files. GitHub Pages serves
 # plain files; a symlink would either 404 or break the database signature.
