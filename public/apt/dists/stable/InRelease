@@ -4,36 +4,36 @@ Hash: SHA512
 Architectures: amd64
 Codename: stable
 Components: main
-Date: Sun, 13 Sep 2026 06:37:47 +0000
+Date: Thu, 17 Sep 2026 08:49:09 +0000
 Description: Official Tipsy Linux packages
 Label: Tipsy
 Origin: Tipsy
 Suite: stable
 MD5Sum:
- b38737dc3bc7ed7a6accb9b6e58b83dc              970 main/binary-amd64/Packages
- 985a76469e75e38acef9fd5f2e80b0c5              588 main/binary-amd64/Packages.gz
+ e0c4450914e09c73d7a6bfc36db65d7d              970 main/binary-amd64/Packages
+ ba275d989de0a97d3e8eaf5f50e853b2              584 main/binary-amd64/Packages.gz
 SHA1:
- 94d25590d513fbeac8961b6e6ab7735d5a7b1cae              970 main/binary-amd64/Packages
- 762e068b1513a22cf57f1297ee973ba0755aeab6              588 main/binary-amd64/Packages.gz
+ 94a55d21f8402e73088e630a49b1072619fbff7a              970 main/binary-amd64/Packages
+ c4827c324db7bcb0e31e80ec776d07cc5de5aed3              584 main/binary-amd64/Packages.gz
 SHA256:
- 91fc29d02ba138b3114e53a25c2ebc31669972543610f522e3c9b044d91d6172              970 main/binary-amd64/Packages
- fc50b2eeaee064aa4216073ee2ba357f17491010633ab57b63f38ced693c2cfa              588 main/binary-amd64/Packages.gz
+ 06ffa69fbc59974dd6fb57adf2b6b7875fbc61933c84ee0e737fcd8b1dd53726              970 main/binary-amd64/Packages
+ f690a10ad6327dec4c1bcbe83d082757ae4e1b5cd66c2360da359a63926b0e68              584 main/binary-amd64/Packages.gz
 SHA512:
- 653d3a09423d873340eb99f1975c60cfca4c92a52cc07947e0f6c78ef9ca2140894fdf8ee80e5391e8386f86283b9f5503a84e0c59774d5d1c105a1e4940fb12              970 main/binary-amd64/Packages
- e4c8fca4898289a010b9cfd5f654aa6f0ac47f2164154772434aa29c25835ce0e3ddb7044264b03b1ea8989ad26d7d166013e05078dd92e780e244a52f40661d              588 main/binary-amd64/Packages.gz
+ 64e464b9a0dd2131c98485d34651f5cfebc00be6d01e9db57abb08655daec0ec15a6c0dbd386c232eb6e5167140c073ca844da5ae7591fdfbdbf936381ad913f              970 main/binary-amd64/Packages
+ 31675ff44e2b818afde261bb1da174aa273dd84adf2105cc3b45e9841c43a601af7128f1381739aec0fbe6ba4fe7948788ffdebacee1ac1160e0632e98ebe6f8              584 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEGWjN0BR+CMDTeHTyJ1o0D3GB+9oFAmqmRLsACgkQJ1o0D3GB
-+9qNFg/+LF9NVFGOguDVVGfaXpj8aVPt6RJpugScnjRlEk8T1GR9Je/i7prPEpCd
-hi762LcqN8DD/PGEt9xvCaNp7MhuEyfh6aQ49FeBGrlUmI6PnXeEQuMan0OZckhr
-WFOayVVHUM3sHRNMUo2brBWzWVCq6VU1qu7ip0ACzNJS22rp6VBZjk6GMhlVjEcP
-fq69pwtbbWEG4YZM+uq2prqIOW10AdhreJTtuy8WZ1sCfWK5sGtOI8m0QLeN3S4K
-p5rYYGuf6QRkrUKbvM6iKkeyoS52lFrczeIVLmpou4vEcplc7aapChTP3CxH9Y8H
-LdfamtKsQVd7U1+1CDiTGBlw2lf2rjrR8NQx7YJZADCbQ2V2TXQJ+PPWEKZKgPWN
-r8B1jJ1xk5M9RGk7lAi+g9SEKlEtNiHEIQU44UjXGpqFO3q6xKDlJ/lgJ5zt5Gxm
-guxU8r7eJTiNkHlp+lFLEWMdyvIvi5cRK/v69CNAIJzZUBPsEKAtnujlZwKCOdpS
-O/KTzXamNAA/CC+/MCfRndTLklL2uGiCWjdvN8QSYOQEd3dBx7ja5N/qfryM2NP9
-1sXzFrvOy4OqGpf9Ga1Baq5ygz3svqlF6HIlCCLAjW/BoRiqD9znFqBpSTrNIHcy
-wIYZcwzMtffObckD1T9ZWMlJq5tfxxAzwr8x1KXMl0tYHx5Zmyk=
-=uya0
+iQIzBAEBCgAdFiEEGWjN0BR+CMDTeHTyJ1o0D3GB+9oFAmqrqYUACgkQJ1o0D3GB
++9pz9w//UPZZH9FlLiEW+6LeMR+ZJ8YAaQWzAG+Bkwn/W1RbeWyq5PhKl7aYc2P+
+0cWXgfVkB/C3lF16UnJGmFIsHG/z4xd7p3sRU+tXF5+JLoKCPu74RE1FGTc+zmk6
+yG0k2e6WSfHRcB3v7yph+FCwAoLHa911Q3tr+virCNAzoSsvUcvxQPmKc3vkwCZ6
+8onaisUKs9d+LTA80FX/lwdYO/2oh7o+EtpH5wf66k0M+xqhidnOGkMi33aRRMNx
+2q+dyjv8+LZn3CzZLdUHjzJd7GVz9xvpa+hrzM+m2R1pUI2zHe4yKTQmkHNmNBA/
+2C6m2A4zTOhR0J8y5WGzcTEDJH/LfmR7BuAIt5alcNWJVbDGoivPG901+soD2oEM
+S/ZQe/WxQWBFcl+xxZO0y4sSipzax20clbH2uhhor162RptEVjysFtvsB8pqvbCx
+BUhD+G7P3OSHxekpMHv3Zq4I+d9sw8GUYFXRn3LDuhh8L8SOvFlIVQhNS20DrVFl
+rzvQoK2YUabm/YTyycLpgddEdJZYWl+d/8oS+81Z0T24pmnj838wPlbU6/QjQ6j1
+OJk2bUNWV04fhhdBk1+924EUB+Tcv42Dn4R5zwL2eY6dRu3leaiyCGV65u/T/pnc
+8q0brwo5w5WKmtooFvacCyGyXz0AaHplITE8aEDRKYwjxwU1aQA=
+=7XcH
 -----END PGP SIGNATURE-----
