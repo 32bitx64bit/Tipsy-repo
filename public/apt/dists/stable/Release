@@ -1,20 +1,20 @@
 Architectures: amd64
 Codename: stable
 Components: main
-Date: Sat, 19 Sep 2026 07:41:58 +0000
+Date: Mon, 21 Sep 2026 17:55:19 +0000
 Description: Official Tipsy Linux packages
 Label: Tipsy
 Origin: Tipsy
 Suite: stable
 MD5Sum:
- cc27122aea1255da29fbb9d4dcf4bdd5              970 main/binary-amd64/Packages
- 078056229ef3da6ef0bac0134b2f6060              588 main/binary-amd64/Packages.gz
+ d3ce9f8ee6720bca53559b6a1cb36edc              970 main/binary-amd64/Packages
+ c44c4f6b2f2c94bac30b37008b1ce1db              586 main/binary-amd64/Packages.gz
 SHA1:
- 47ab23f7c755026265df4a22df3a150c1e20d643              970 main/binary-amd64/Packages
- 94b77b1b2c35dccc654417aa3b6a04395e317fe0              588 main/binary-amd64/Packages.gz
+ a1c1ae8951699b8966fb00ca0a6d6447fb29f7ce              970 main/binary-amd64/Packages
+ f9554108f498aa052691412f12e37d4d73e7d881              586 main/binary-amd64/Packages.gz
 SHA256:
- 5cc680f4cd9790de12c7b0ddae457ef58f5ce791037a643a70c0c43e833f87f8              970 main/binary-amd64/Packages
- bf467d7336c714c6182b4cbc626cd36213e3c52a6dfed34344ae14b787daa6af              588 main/binary-amd64/Packages.gz
+ 3e23af1a38abf947e1e2196756f9f2cd536933366600da044ad2d502a213e4f1              970 main/binary-amd64/Packages
+ 978d6218bd74cf7f404ba92ea32e5e0fc568482576813e657ef80ef7e965ef41              586 main/binary-amd64/Packages.gz
 SHA512:
- 02e4b316906ad0b51f07bf0b05f72e1ed3038d906d6649b7929383ecd9a3f3d72285e5b0dbe29af75262edc196305094a60e9ed154ab4059e9980236c1e91d52              970 main/binary-amd64/Packages
- 4f22a41bc59e49096110e0c175868097b863f1f88cab9cac8d1f52f52a7a532f83c5a1f1a1fa9023c576475d1a5167f40a7356eb20f4a999521f40ae93321640              588 main/binary-amd64/Packages.gz
+ 817e6d949c1a33c5c9b692b69e9ed077fa1e0a9717eba42f6aaf3afffb511a26bbb8250cf263c2d3795d3ad66652f26c6261dd5626795e8fecb83e595552eeb5              970 main/binary-amd64/Packages
+ 873cc1b16558f8c4cfb9fefa70df4b8d4acb4b1df602bb69fa6756156af929ab1e3b624c104569d10801757a665e3143636ca57db98744af6b5fd966643236f9              586 main/binary-amd64/Packages.gz
