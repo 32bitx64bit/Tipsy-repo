@@ -1,14 +1,14 @@
 Package: tipsy
-Version: 2.0.4
+Version: 2.0.5
 Architecture: amd64
 Maintainer: Tipsy Contributors <32bitx64bit@users.noreply.github.com>
-Installed-Size: 54036
+Installed-Size: 54048
 Depends: libqt6core6 | libqt6core6t64, libqt6gui6 | libqt6gui6t64, libqt6widgets6 | libqt6widgets6t64, libx11-6, libx11-xcb1, libxcb1, libxext6, libxrandr2, libxtst6, libxi6, libegl1, libgles2, libpango-1.0-0, libpangocairo-1.0-0, libpangoft2-1.0-0, libcairo2, libpulse0
-Filename: pool/tipsy_2.0.4_amd64.deb
-Size: 16344928
-MD5sum: d1a6626997f15ee3b15d2da1df2b21eb
-SHA1: 3c4640426b7db33154f870bf8e236970c1320e45
-SHA256: a688bca369b849ba6773a46e306289a0d7688de7a9b0652459493d3590445544
+Filename: pool/tipsy_2.0.5_amd64.deb
+Size: 16351076
+MD5sum: d512fe541a68f2ef0215da2856de679c
+SHA1: ee55ed9c2bc2490be34d678f4dc82635f12cb79d
+SHA256: 35291d3e007086d2f8d1dac57ecf2944e7483c34a5c6a1774b8833a3dda8e7bc
 Section: games
 Priority: optional
 Homepage: https://github.com/32bitx64bit/Tipsy
